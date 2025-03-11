@@ -26,8 +26,15 @@ class _SavedScreenState extends State<SavedScreen> {
 }
 
 
-class TopChipGroupFilter extends StatelessWidget {
+class TopChipGroupFilter extends StatefulWidget {
   const TopChipGroupFilter({super.key});
+
+  @override
+  _TopChipGroupFilterState createState() => _TopChipGroupFilterState();
+}
+
+class _TopChipGroupFilterState extends State<TopChipGroupFilter> {
+  String _selectedChip = "전체"; // 선택된 Chip을 저장
 
   @override
   Widget build(BuildContext context) {
@@ -35,10 +42,49 @@ class TopChipGroupFilter extends StatelessWidget {
       padding: EdgeInsets.symmetric(vertical: 10, horizontal: 16),
       child: Wrap(
         spacing: 8.0,
-        children: const [
-          Chip(label: Text("전체")),
-          Chip(label: Text("중요")),
-          Chip(label: Text("완료됨")),
+        children: [
+          ActionChip(
+            label: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text("전체"),
+                if (_selectedChip == "전체") Icon(Icons.check, size: 18) // 체크 아이콘 추가
+              ],
+            ),
+            onPressed: () {
+              setState(() {
+                _selectedChip = "전체";
+              });
+            },
+          ),
+          ActionChip(
+            label: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text("중요"),
+                if (_selectedChip == "중요") Icon(Icons.check, size: 18)
+              ],
+            ),
+            onPressed: () {
+              setState(() {
+                _selectedChip = "중요";
+              });
+            },
+          ),
+          ActionChip(
+            label: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text("완료됨"),
+                if (_selectedChip == "완료됨") Icon(Icons.check, size: 18)
+              ],
+            ),
+            onPressed: () {
+              setState(() {
+                _selectedChip = "완료됨";
+              });
+            },
+          ),
         ],
       ),
     );

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:interest_todo_app/views/account/AccountScreen.dart';
 import 'package:interest_todo_app/views/home/HomeScreen.dart';
+import 'package:interest_todo_app/views/login/LoginScreen.dart';
 import 'package:interest_todo_app/views/saved/SavedScreen.dart';
 import 'package:interest_todo_app/views/search/SearchScreen.dart';
 
@@ -19,7 +20,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MainScreen(),
+      home: LoginScreen(),
     );
   }
 }
