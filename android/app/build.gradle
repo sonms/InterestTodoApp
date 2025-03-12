@@ -22,6 +22,12 @@ if (flutterVersionName == null) {
     flutterVersionName = '1.0'
 }
 
+def dotenv = new Properties()
+def dotenvFile = file("../../assets/config/.env") // `.env` 파일 경로 설정
+if (dotenvFile.exists()) {
+    dotenvFile.withReader("UTF-8") { reader -> dotenv.load(reader) }
+}
+
 android {
     namespace "com.purang.interesttodoapp.interest_todo_app"
     compileSdkVersion flutter.compileSdkVersion
@@ -49,6 +55,7 @@ android {
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
+        manifestPlaceholders["KAKAO_API_KEY"] = dotenv["KAKAO_API_KEY"] ?: ""
     }
 
     buildTypes {

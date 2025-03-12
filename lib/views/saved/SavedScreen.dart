@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class SavedScreen extends StatefulWidget {
+  const SavedScreen({super.key});
+
   @override
   _SavedScreenState createState() => _SavedScreenState();
 }
