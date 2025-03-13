@@ -1,11 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:interest_todo_app/views/account/AccountScreen.dart';
 import 'package:interest_todo_app/views/home/HomeScreen.dart';
 import 'package:interest_todo_app/views/login/LoginScreen.dart';
 import 'package:interest_todo_app/views/saved/SavedScreen.dart';
 import 'package:interest_todo_app/views/search/SearchScreen.dart';
+import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
+import 'package:url_strategy/url_strategy.dart';
 
-void main() {
+Future<void> main() async {
+  await dotenv.load(fileName: ".env"); // ✅ .env 파일 로드
+  String kakaoApiKey = dotenv.env['KAKAO_API_KEY'] ?? '';
+  String jsApiKey = dotenv.env['JAVASCRIPT_API_KEY'] ?? '';
+
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // runApp() 호출 전 Flutter SDK 초기화
+  KakaoSdk.init(
+    nativeAppKey: kakaoApiKey,
+    javaScriptAppKey: jsApiKey,
+  );
+  setPathUrlStrategy();
   runApp(const MyApp());
 }
 
