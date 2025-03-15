@@ -11,7 +11,7 @@ class KakaoLoginService {
       print(' 카카오 로그인 성공! 토큰: ${token.accessToken}');
       return token;
     } catch (error) {
-      print(' 카카오 로그인 실패: $error');
+      print(' 카카오 로그인 실패 services: $error');
       return null;
     }
   }

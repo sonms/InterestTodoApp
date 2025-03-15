@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
-import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
-
+import 'package:interest_todo_app/viewmodels/user_controller.dart';
+import 'package:provider/provider.dart';
 import '../../main.dart';
 
 enum LoginType { kakao, naver }
@@ -43,56 +43,13 @@ class _LoginButtonGroupState extends State<LoginButtonGroup> {
     });
 
     if (type == LoginType.kakao) {
-      _loginWithKakao();
+      Provider.of<UserController>(context, listen: false).loginWithKakao();
     }
     // 여기에 로그인 로직 추가
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(builder: (context) => const MainScreen()),
     );
-  }
-
-  Future<void> _loginWithKakao() async {
-    try {
-      bool isKakaoInstalled = await isKakaoTalkInstalled();
-
-      OAuthToken token = isKakaoInstalled
-          ? await UserApi.instance.loginWithKakaoTalk()
-          : await UserApi.instance.loginWithKakaoAccount();
-
-      print('카카오 로그인 성공! 토큰: ${token.accessToken}');
-      _getUserInfo(); // 로그인 성공 시 사용자 정보 가져오기
-    } catch (error) {
-      print('카카오 로그인 실패: $error');
-    }
-  }
-
-  Future<void> _getUserInfo() async {
-    try {
-      User user = await UserApi.instance.me();
-      print('사용자 정보: ${user.kakaoAccount?.email}, 닉네임: ${user.kakaoAccount?.profile?.nickname}');
-    } catch (error) {
-      print('사용자 정보 가져오기 실패: $error');
-    }
-  }
-
-  Future<void> _loginWithKakaoTalk() async {
-    try {
-      await UserApi.instance.loginWithKakaoTalk();
-      print("카카오톡 로그인 성공!");
-    } catch (error) {
-      print("카카오톡 로그인 실패, 계정 로그인 시도");
-      _loginWithKakaoAccount();
-    }
-  }
-
-  Future<void> _loginWithKakaoAccount() async {
-    try {
-      await UserApi.instance.loginWithKakaoAccount();
-      print("카카오 계정 로그인 성공!");
-    } catch (error) {
-      print("카카오 계정 로그인 실패: $error");
-    }
   }
 
   @override

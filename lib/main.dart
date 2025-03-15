@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:interest_todo_app/viewmodels/user_controller.dart';
 import 'package:interest_todo_app/views/account/AccountScreen.dart';
 import 'package:interest_todo_app/views/home/HomeScreen.dart';
 import 'package:interest_todo_app/views/login/LoginScreen.dart';
@@ -7,11 +8,17 @@ import 'package:interest_todo_app/views/saved/SavedScreen.dart';
 import 'package:interest_todo_app/views/search/SearchScreen.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 import 'package:url_strategy/url_strategy.dart';
+import 'package:provider/provider.dart';
 
 Future<void> main() async {
-  await dotenv.load(fileName: ".env"); // ✅ .env 파일 로드
+  await dotenv.load(fileName: "assets/config/.env");
   String kakaoApiKey = dotenv.env['KAKAO_API_KEY'] ?? '';
   String jsApiKey = dotenv.env['JAVASCRIPT_API_KEY'] ?? '';
+
+  if (kakaoApiKey.isEmpty || jsApiKey.isEmpty) {
+    print("Kakao API Key or JavaScript API Key is missing.");
+    return; // 키가 없으면 앱을 종료하거나 로그인 화면으로 이동하도록 설정
+  }
 
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -21,8 +28,26 @@ Future<void> main() async {
     javaScriptAppKey: jsApiKey,
   );
   setPathUrlStrategy();
-  runApp(const MyApp());
+  //await printKeyHash();
+
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => UserController()),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
+
+/*Future<void> printKeyHash() async {
+  try {
+    final keyHash = await KakaoSdk.origin;
+    print("현재 사용 중인 키 해시: $keyHash");
+  } catch (e) {
+    print("키 해시를 가져오는 중 오류 발생: $e");
+  }
+}*/
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
