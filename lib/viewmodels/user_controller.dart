@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 import 'package:interest_todo_app/services/kakao_login_services.dart'; // KakaoLoginService import
 
-class UserController with ChangeNotifier {
+class UserController with ChangeNotifier { //services의 정보를 받아 객체로 생성 후 로그인 여부 판단
   final KakaoLoginService _kakaoLoginService = KakaoLoginService();
   User? _user;
 

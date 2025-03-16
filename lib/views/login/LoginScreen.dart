@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:interest_todo_app/viewmodels/user_controller.dart';
+import 'package:interest_todo_app/views/interest/interest_screen.dart';
 import 'package:provider/provider.dart';
 import '../../main.dart';
 
@@ -42,13 +43,13 @@ class _LoginButtonGroupState extends State<LoginButtonGroup> {
       selectedType = type;
     });
 
-    if (type == LoginType.kakao) {
+    if (type == LoginType.kakao) { //Provider는 이 과정에서 상태를 공유하고 변경 사항을 UI에 반영하는 역할 = 의존성 주입 및 상태관리 - flow, 
       Provider.of<UserController>(context, listen: false).loginWithKakao();
     }
     // 여기에 로그인 로직 추가
     Navigator.pushReplacement(
       context,
-      MaterialPageRoute(builder: (context) => const MainScreen()),
+      MaterialPageRoute(builder: (context) => InterestScreen()),
     );
   }
 

@@ -1,6 +1,6 @@
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 
-class KakaoLoginService {
+class KakaoLoginService { // 비동기로 Oauth 연결 및 카카오톡 설치 여부 확인 / 유저 정보까지
   Future<OAuthToken?> login() async {
     try {
       bool isKakaoInstalled = await isKakaoTalkInstalled();
